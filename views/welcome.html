@@ -1,0 +1,248 @@
+<div id="welcome">
+    <div id="waiting" @click="beginIntro()" v-if="state.intro_state === states.intro_state.waiting">
+        <div class="">Click Anywhere To Begin</div>
+    </div>
+    <div id="crawl" v-if="state.intro_state === states.intro_state.crawl">
+        <h3>War</h3>
+        <p>
+            The Dwarven kingdoms in the North have fallen to the forces of darkness. Many
+            old alliances have been <strong>broken</strong>, and as long as
+            <strong>the threat</strong> in the mountains remains, it grows
+            <strong>ever more powerful</strong>.
+        </p>
+        <p>
+            Recent defeats have left the kingdoms that still stand in the South <strong>shadows of
+            their former glory</strong>. The southerners <strong>fear of what is to come</strong> has
+            caused strife between the remaining nations. The warlord-king <strong>Markus Kroll</strong>
+            has taken advantage of the chaos to expand his empire of barbarians,
+            <strong>the Brotherhood</strong>.
+        </p>
+        <p>
+            You are travelling along the king's road to the town of <strong>Elmswood</strong>
+            in the kingdom of <strong>Braxton</strong>. You feel the cool dusk breeze blowing over
+            the well-travelled road as if to urge you on to the town before nightfall.
+            Divines willing, you will make it. You are about to push on when something, or someone,
+            <strong>catches your eye</strong>...
+        </p>
+    </div>
+    <div id="title" v-if="state.intro_state === states.intro_state.title">
+        <div>Introducing</div>
+        <div>Dungeons</div>
+        <div>and</div>
+        <div>Daemios</div>
+    </div>
+
+    <div id="builder" v-if="state.intro_state === states.intro_state.builder">
+        <div id="pixie">
+            <div class="wings">
+                <div class="wing up right"></div>
+                <div class="wing up left"></div>
+                <div class="wing down right"></div>
+                <div class="wing down left"></div>
+            </div>
+            <div class="body">
+                <div class="outer-circle"></div>
+                <div class="inner-circle"></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="intro" v-if="state.builder === states.builder.intro">
+                <h1>Introductions</h1>
+                <p>
+                    Hey! My name is <strong>Morningdew</strong>, and I'm a <strong>pixie</strong>!
+                </p>
+                <p>
+                    I don't get out of the toadstool village much... Everything is
+                    so new and wonderful! I've never seen something like you before.
+                    What <strong>race</strong> are you?
+                </p>
+            </div>
+            <div class="race" v-if="state.builder === states.builder.race">
+                <h1>Race</h1>
+                <div class="races">
+                    <div
+                        class="race"
+                        :class="state.race === race ? 'active' : ''"
+                        v-for="race in state.races"
+
+                        @click="state.race = race"
+                    >
+                        {{race.name}}
+                    </div>
+                </div>
+                <div class="breakdown" v-if="state.race">
+                    <h2>{{state.race.name}}</h2>
+                    <p>{{state.race.description}}</p>
+                    <div class="bonuses" v-if="state.race">
+                        <span v-for="bonus, key in state.race.bonuses">
+                            {{key}}: {{bonus >= 0 ? '+' + bonus : bonus}}
+                        </span>
+                    </div>
+                </div>
+                <div class="breakdown" v-else>
+                    Please select a race from the list.
+                </div>
+            </div>
+            <div class="race-response" v-if="state.builder === states.builder.race_response">
+                <h1>Race</h1>
+
+                <p>Wow! A <strong>{{state.race.name}}</strong> in my forest!</p>
+
+                <p>
+                    I've heard a lot about your people! My father once told me about a <strong>mighty warrior</strong>
+                    who visited our village in the past. She was a <strong>{{state.race.name}}</strong> too! She fought up close,
+                    protecting her team members from harm.
+                </p>
+                <p>
+                    How do you fight? Do you fight up close like the warrior, or do you keep your distance?
+                    What about how you fight? Do you like to <strong>defend</strong>, <strong>attack</strong>, or
+                    <strong>heal</strong>? This is so exciting! I'll be able to tell my father about this when
+                    I get back!
+                </p>
+            </div>
+            <div class="archetype" v-if="state.builder === states.builder.archetype">
+                <h1>Archetype</h1>
+                <div class="range">
+                    <h2>Range</h2>
+                    <div >
+
+                    </div>
+                    <div >
+
+                    </div>
+                    <div >
+
+                    </div>
+                    <aui-radio class="melee" name="combat-range">
+                        <i class="fas fa-male"></i>Melee<i class="fas fa-male"></i>
+                    </aui-radio>
+                    <aui-radio class="mix" name="combat-range">
+                        <i class="fas fa-male"></i>Mix<i class="fas fa-male"></i>
+                    </aui-radio>
+                    <aui-radio class="ranged" name="combat-range">
+                        <i class="fas fa-male"></i>Ranged<i class="fas fa-male"></i>
+                    </aui-radio>
+                </div>
+                <div class="type">
+                    <h2>Type</h2>
+                    <aui-radio name="combat-type">Offense</aui-radio>
+                    <aui-radio name="combat-type">Defense</aui-radio>
+                    <aui-radio name="combat-type">Healer</aui-radio>
+                </div>
+            </div>
+            <div class="archetype-response" v-if="state.builder === states.builder.archetype_response">
+                <h1>Archetype</h1>
+                <p>
+                    That's so impressive! A {{state.archetype.range}} / {{state.archetype.type}} fighter!
+                    What a smart combination! I wouldn't want to fight against it.
+                </p>
+                <p>
+                    I think that's everything... oh wait! What about a <strong>Divinity</strong>? Do you serve any of
+                    them? I've heard it can be a terrible burden, but the rewards can make up for it. Is it true that
+                    people who serve them have <strong>special powers</strong>? Sounds like a tough choice!
+                </p>
+                <p>
+                    How about it?
+                </p>
+
+            </div>
+            <div class="divinity" v-if="state.builder === states.builder.divinity"></div>
+            <div class="divinity-response" v-if="state.builder === states.builder.divinity_response"></div>
+            <div class="finish" v-if="state.builder === states.builder.finish"></div>
+
+            <div class="control">
+                <aui-button
+                        class="back btn-secondary"
+                        @click="state.builder = states.builder.race"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.race_response"
+                >
+                    Back to Race
+                </aui-button>
+                <aui-button
+                        class="back btn-secondary"
+                        @click="state.builder = states.builder.race"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.archetype"
+                >
+                   Back to Race
+                </aui-button>
+                <aui-button
+                        class="back btn-secondary"
+                        @click="state.builder = states.builder.archetype"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.archetype_response"
+                >
+                    Back to Archetype
+                </aui-button>
+                <aui-button
+                        class="back btn-secondary"
+                        @click="state.builder = states.builder.archetype"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.divinity"
+                >
+                    Back to Archetype
+                </aui-button>
+
+                <aui-button
+                    class="continue btn-primary"
+                    @click="state.builder = states.builder.race"
+                    v-if="state.builder === states.builder.intro"
+                >
+                    Select Race
+                </aui-button>
+                <aui-button
+                        class="continue btn-primary"
+                        @click="state.builder = states.builder.race_response"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.race"
+                >
+                    Confirm Race
+                </aui-button>
+                <aui-button
+                        class="continue btn-primary"
+                        @click="state.builder = states.builder.archetype"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.race_response"
+                >
+                    Select Archetype
+                </aui-button>
+                <aui-button
+                        class="continue btn-primary"
+                        @click="state.builder = states.builder.archetype_response"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.archetype"
+                >
+                    Confirm Archetype
+                </aui-button>
+                <aui-button
+                        class="continue btn-primary"
+                        @click="state.builder = states.builder.divinity"
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.archetype_response"
+                >
+                    Select Divinity
+                </aui-button>
+                <aui-button
+                        class="continue btn-primary"
+                        @click=""
+                        :disabled="!state.race"
+                        v-if="state.builder === states.builder.finish"
+                >
+                  Finish Character Build
+                </aui-button>
+            </div>
+        </div>
+    </div>
+    <div id="soundtrack" v-if="true">
+
+        <iframe src="dynamicsuite/packages/dndaemios/audio/silence.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
+        <audio controls id="music">
+            <source
+                    src="dynamicsuite/packages/dndaemios/audio/intro_music.mp3"
+                    type="audio/mpeg"
+            >
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>

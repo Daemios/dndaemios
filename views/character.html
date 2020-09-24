@@ -1,0 +1,21 @@
+<div id="sheet">
+
+    <div id="general" v-if="state.view === states.view.general" class="card">
+        <div id="basic-information">
+            <div id="character-name">
+                <h1>{{fullName}}</h1>
+            </div>
+        </div>
+    </div>
+
+    <attributes :character="character"></attributes>
+
+    <combat-stats :character="character"></combat-stats>
+
+    <experience-details :character="character"></experience-details>
+
+    <skills :character="character"></skills>
+
+    <abilities :character="character" :ability_data="ability_data"></abilities>
+
+</div>
