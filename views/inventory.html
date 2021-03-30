@@ -21,7 +21,7 @@
             <span>Name</span>
             <span>Quantity</span>
         </div>
-        <item :item="item" v-for="item in state.current_inventory" @edit="editItem(item)"></item>
+        <item v-for="item in state.current_inventory" :item="item" @edit="editItem(item)"></item>
     </div>
     <div id="no-items" class="card" v-else>
         No Items

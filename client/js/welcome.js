@@ -3,106 +3,22 @@ let instance = new Vue({
     data: {
         state: {
             config: {
-                into_scroll_speed: 1000
+
             },
             intro_state: null,
             builder: null,
             race: null,
-            races: {
-                elf_wood: {
-                    meta: 'Elf',
-                    name: 'Wood Elf',
-                    bonuses: {
-                        nature: 4,
-                        animal_handling: 2,
-                        athletics: 2
-                    },
-                    description: 'Wood Elves, also known as the Ithilrendi, are commonly ' +
-                        'described as having olive skin and hair matching the various ' +
-                        'autumnal colors of the leaves. They exceed at working with ' +
-                        'nature and animals, and their natural and effortless grace ' +
-                        'is quite useful during feats of great athleticism.'
-                },
-                elf_moon:{
-                    meta: 'Elf',
-                    name: 'Moon Elf',
-                    bonuses: {
-                        arcana: 4,
-                        history: 2,
-                        athletics: 2
-                    },
-                    description: 'The most elusive of the elves, Ulurendi are the fairest-skinned ' +
-                        'of their brothers and sisters, featuring near pure-white skin and hair. Their ' +
-                        'long-standing bond with the power of the moon has steered their culture towards ' +
-                        'the arcane, and as a result Moon Elves almost always have a level of arcane knowledge ' +
-                        'in addition to the typical elven strengths.'
-                },
-                elf_sea:{
-                    meta: 'Elf',
-                    name: 'Sea Elf',
-                    bonuses: {
-                        nature: 4,
-                        survival: 2,
-                        perception: -2
-                    },
-                    description: 'Sea elves, or Naurendi, lack the tails of Merfolk (which they are often confused with), ' +
-                        'but share much of their other features, such as scaly green or blue skin, small vestigal fins along ' +
-                        'their arms and legs, and functional gills. They share a deep tie to nature like their Wood Elf ' +
-                        'brethren, but due to their weakness out of water, most of the natural aestheticism of other ' +
-                        'Elves is lost on them and the toll of the air on their naked skin causes light distraction.'
-                },
-            },
+            races: null,
             archetype: {
-                type: null,
+                role: null,
                 range: null
             },
             archetypes: {
-                type: {
-                    melee: 'Melee'
-                },
-                range: {
-                    melee: {
-                        name: 'Melee',
-                        description: 'Fight up close and in the opponent\'s face.',
-                        bonuses: {
-                            damage: {
-                                value: 1.1,
-                                pretty: 'Damage +10%'
-                            },
-                            healing: {
-                                value: 1.1,
-                                pretty: 'Healing +10%'
-                            }
-                        },
-                        locked: {
-
-                        }
-                    },
-                    mix: {
-                        name: 'Mix',
-                        description: 'Sling abilities from afar and have the staying power for melee combat.',
-                        bonuses: {
-
-                        },
-                        locked: {
-
-                        }
-                    },
-                    ranged: {
-                        name: 'Ranged',
-                        description: 'Fight from afar, so that they never reach you.',
-                        bonuses: {
-                            mp: {
-                                value: 1,
-                                pretty: 'MP +1'
-                            }
-                        },
-                        locked: {
-
-                        }
-                    }
-                }
+                role: null,
+                range: null
             },
+            divinity: null,
+            divinities: null,
         },
         states: {
             intro_state: {
@@ -118,6 +34,8 @@ let instance = new Vue({
                 race_response: 'race-response',
                 archetype: 'archetype',
                 archetype_response: 'archetype-response',
+                ability_builder: 'ability-builder',
+                ability_builder_response: 'ability-builder-response',
                 divinity: 'divinity',
                 divinity_response: 'divinity-response',
                 finish: 'finish'
@@ -125,6 +43,7 @@ let instance = new Vue({
         }
     },
     methods: {
+        // ---- Intro ----
         beginIntro() {
             this.state.intro_state = this.states.intro_state.crawl
             document.getElementById("music").play();
@@ -173,19 +92,34 @@ let instance = new Vue({
             }
 
 
+        },
+
+        // ---- Builder ----
+
+        // ---- Database ----
+        getRaces() {
+            DynamicSuite.call('dndaemios', 'races.get', null, (response) => {
+                this.state.races = response.data;
+            })
+        },
+        getArchRange() {
+            DynamicSuite.call('dndaemios', 'archetypes.range.get', null, (response) => {
+                this.state.archetypes.range = response.data;
+                console.log(response)
+            })
+        },
+        getArchRole() {
+            DynamicSuite.call('dndaemios', 'archetypes.role.get', null, (response) => {
+                this.state.archetypes.role = response.data;
+                console.log(response)
+            })
         }
-    },
-    computed: {},
-    watch: {
-
-    },
-    created() {
-
     },
     mounted() {
         this.state.builder = this.states.builder.intro;
-        this.state.intro_state = this.states.intro_state.waiting;
-
-
+        this.state.intro_state = this.states.intro_state.builder
+        this.getRaces();
+        this.getArchRange();
+        this.getArchRole();
     }
 });

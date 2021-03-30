@@ -250,3 +250,127 @@ Vue.component('item', {
 
     }
 });
+
+Vue.component('entity', {
+    template: `<div 
+            class="entity" 
+            :class="classes" 
+            @mouseover="$emit('entity-mouseover')"
+            @mouseout="$emit('entity-mouseout')"
+        >
+        <div class="nameplate">
+            {{entity.name}}
+        </div>
+        <div class="stats">
+            <div class="ap">{{entity.ap.current}}</div>
+            <div class="mp">{{entity.mp.current}}</div>
+        </div>
+        <div class="hp">{{entity.life.current}}|{{entity.life.max}}</div>
+    </div>`,
+    props: {
+        entity: {
+            type: Object,
+            required: true
+        },
+        active: {
+            Boolean,
+            required: true
+        }
+    },
+    computed: {
+        classes() {
+            let string = this.entity.faction;
+            if (this.active) {
+                string = string + ' active'
+            }
+            return string;
+        }
+    }
+});
+
+Vue.component('arena-cell', {
+    template:
+    `<div 
+        class="cell" 
+        :class="cell.terrain" 
+        oncontextmenu="return false"
+        @click="$emit('click')"
+        @mouseover="$emit('cell-mouseover')"
+    >
+        <div class="overlay destination-overlay" v-if="cell.valid_destination && cell.valid_destination !== null && cell.passable"></div>
+        <div class="overlay impassable-overlay" v-if="cell.valid_destination && cell.valid_destination !== null && !cell.passable"></div>
+        <div class="entities" v-if="entities.length">
+            <entity 
+                v-for="entity in entities[y][x]" 
+                :entity="entity" 
+                :active="isActive"
+                @entity-mouseover="$emit('entity-mouseover', entity)"
+                @entity-mouseout="$emit('entity-mouseout')"
+            ></entity>
+        </div>
+    </div>`,
+    props: {
+        cell: {
+            type: Object,
+            required: true
+        },
+        entities: {
+            type: Array,
+            required: true
+        },
+        active: {
+            Object,
+            required: true
+        },
+        x: {
+            type: Number | String,
+            required: true
+        },
+        y: {
+            type: Number | String,
+            required: true
+        }
+    },
+    computed: {
+        isActive() {
+            return ((this.x.toString() === this.active.x.toString()) && (this.y.toString() === this.active.y.toString()))
+        }
+    },
+    mounted() {}
+});
+
+Vue.component('arena', {
+    template: `<div id="arena" v-if="map !== null">
+        <div class="row" v-for="row, y in map">
+            <arena-cell 
+                v-for="cell, x in row"
+                @click="$emit('click', x, y)"
+                @cell-mouseover="$emit('cell-mouseover', x, y)"
+                @entity-mouseover="$emit('entity-mouseover', x, y, $event)"
+                @entity-mouseout="$emit('entity-mouseout')"
+                :cell="cell"
+                :entities="entities"
+                :active="active"
+                :x="x"
+                :y="y"
+            ></arena-cell>
+        </div>
+    </div>`,
+    props: {
+        map: {
+            type: Array,
+            required: true
+        },
+        entities: {
+            type: Array,
+            required: true
+        },
+        active: {
+            Object,
+            required: true
+        }
+    },
+    mounted() {
+
+    }
+});

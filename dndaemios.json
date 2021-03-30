@@ -23,6 +23,14 @@
       "public": true,
       "hide_nav": false
     },
+    "/overworld": {
+      "entry": "views/overworld.html",
+      "title": "Overworld",
+      "nav_name": "Overworld",
+      "js": ["js/overworld.js"],
+      "css": ["css/overworld.min.css"],
+      "public": true
+    },
     "/character": {
       "entry": "views/character.html",
       "title": "Character Sheet",
@@ -66,6 +74,23 @@
       "entry": "apis/inventory.delete.api.php",
       "public": true,
       "post": ["item_id"]
+    },
+
+
+    "races.get": {
+      "entry": "apis/character/races.get.php",
+      "public": true
+    },
+
+
+    "archetypes.range.get": {
+      "entry": "apis/character/archetypes.range.get.php",
+      "public": true
+    },
+    "archetypes.role.get": {
+      "entry": "apis/character/archetypes.role.get.php",
+      "public": true
     }
+
   }
 }
