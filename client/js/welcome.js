@@ -117,7 +117,7 @@ let instance = new Vue({
     },
     mounted() {
         this.state.builder = this.states.builder.intro;
-        this.state.intro_state = this.states.intro_state.builder
+        this.state.intro_state = this.states.intro_state.waiting
         this.getRaces();
         this.getArchRange();
         this.getArchRole();

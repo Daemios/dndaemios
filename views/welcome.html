@@ -99,6 +99,10 @@
             </div>
             <div class="archetype" v-if="state.builder === states.builder.archetype">
                 <h1>Archetype</h1>
+                <div class="archetype-info">
+                    All options start with at least one damaging ability and have additional abilities
+                    added depending on what is chosen.
+                </div>
                 <div class="range-choice">
                     <h2>Range</h2>
                     <div
@@ -113,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="archetype-choice">
+                <div class="role-choice">
                     <h2>Role</h2>
                     <div class="choices">
                         <div
@@ -273,7 +277,9 @@
     </div>
     <div id="soundtrack" v-if="true">
 
-        <iframe src="dynamicsuite/packages/dndaemios/audio/silence.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
+        <iframe src="dynamicsuite/packages/dndaemios/audio/silence.mp3"
+                allow="autoplay" id="audio" style="display: none"
+        ></iframe>
         <audio controls id="music">
             <source
                     src="dynamicsuite/packages/dndaemios/audio/intro_music.mp3"

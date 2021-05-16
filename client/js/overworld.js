@@ -173,7 +173,7 @@ let instance = new Vue({
                 y_on_map--;
             }
         },
-        clearRangeDiamond() {
+        clearRangeHighlights() {
             // Row
             for (let y = 0; y < this.generation.cell_count; y++) {
                 // Cells
