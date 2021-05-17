@@ -4,50 +4,37 @@
   "version": "0.0.1",
   "description": "Dungeons and Daemios game module",
   "license": "Proprietary",
-  "local": {
-    "autoload": ["lib"],
-    "css": [
-      "css/dndaemios.components.min.css"
-    ],
-    "js": [
-      "js/dndaemios.components.js"
-    ]
-  },
+  "css": [
+    "css/dndaemios.min.css"
+  ],
+  "js": [
+    "js/dndaemios.min.js"
+  ],
+  "autoload": ["lib"],
   "views": {
     "/welcome": {
       "entry": "views/welcome.html",
       "title": "Welcome",
-      "js": ["js/welcome.js"],
-      "css": ["css/welcome.min.css"],
       "navigable": false,
-      "public": true,
-      "hide_nav": false
+      "public": true
     },
     "/overworld": {
       "entry": "views/overworld.html",
       "title": "Overworld",
       "nav_name": "Overworld",
-      "js": ["js/overworld.js"],
-      "css": ["css/overworld.min.css"],
       "public": true
     },
     "/character": {
       "entry": "views/character.html",
       "title": "Character Sheet",
       "nav_name": "Character",
-      "js": ["js/character.js"],
-      "css": ["css/character.min.css"],
-      "public": true,
-      "hide_nav": false
+      "public": true
     },
     "/inventory": {
       "entry": "views/inventory.html",
       "title": "Inventory",
       "nav_name": "Inventory",
-      "js": ["js/inventory.js"],
-      "css": ["css/inventory.min.css"],
-      "public": true,
-      "hide_nav": false
+      "public": true
     }
   },
   "apis": {

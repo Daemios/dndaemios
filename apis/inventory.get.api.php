@@ -32,8 +32,7 @@ try {
     return new Response('OK', 'Items retrieved', $items);
 
 } catch (Exception $e) {
-
-    return new Response('ERROR', 'Unknown request type');
+    return new Response('ERROR', 'Unknown request type', $e);
 
 }
 

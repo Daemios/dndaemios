@@ -1,0 +1,45 @@
+@import colors
+
+.aui.modal-container
+
+  .modal
+    width: 100%
+
+    .header
+      border: 0
+      margin-bottom: 0
+
+      &.modal-primary
+        background: lighten($secondary, 5%)
+
+        h4
+          color: $text-theme
+
+    .body
+      background: $primary
+
+.aui.input
+  label
+    input
+      color: $text-theme
+      background: $background-input
+      border: none
+
+.aui.wysiwyg
+
+  .pell-actionbar
+    background: $secondary
+    border: 0
+
+    .pell-btn
+      color: $text-theme
+
+      &:hover
+        background: lighten($secondary, 5%)
+
+  .pell-content
+    background: $background-input
+    border: 0
+
+    &:focus
+      box-shadow: 0 2px 5px 0px darken($background-input, 10%) inset
