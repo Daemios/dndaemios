@@ -6,8 +6,8 @@
         :entities="arena.entities"
         :map="arena.map"
         @click="teleportTestingWrapper"
-        @entity-mouseover="rangeDiamond"
-        @entity-mouseout="clearRangeHighlights"
+        @entity-mouseover="highlightShape"
+        @entity-mouseout="clearHighlights"
         @cell-mouseover="pathToCell"
     ></dnd-arena>
   </div>
@@ -137,7 +137,7 @@ export default {
       // Check to see if there's any planned movement in the buffer
       if (this.arena.planned_movement.length) {
         // Clear existing highlights in cell data
-        this.clearRangeHighlights();
+        this.clearHighlights();
 
         // Iterate through buffer and apply new highlights
         this.arena.planned_movement.forEach(movement => {
@@ -164,10 +164,16 @@ export default {
       }
 
     },
-    highlightShape(arg_x, arg_y, entity) {
+    highlightShape(x, y, entity, shape = 'diamond') {
+      if (type === 'diamond') {
 
+      } else if (type === 'square') {
+
+      } else if (type === 'cross') {
+
+      }
     },
-    clearRangeHighlights() {
+    clearHighlights() {
       this.iterateCells((x, y) => {
         this.arena.map[x][y].valid_destination = null;
       })
