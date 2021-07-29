@@ -16,16 +16,19 @@
         </span>
         </div>
 
-        <div id="items" class="" v-if="state.current_inventory">
-            <div class="item card">
-                <span>Type</span>
-                <span>Name</span>
-                <span>Quantity</span>
-            </div>
+        <div class="ui">
+
+          <dnd-inventory-paper-doll
+              @change="getInventory"
+          ></dnd-inventory-paper-doll>
+
+          <div id="items" class="" v-if="state.current_inventory">
             <dnd-item v-for="item in state.current_inventory" :item="item" @edit="editItem(item)"></dnd-item>
-        </div>
-        <div id="no-items" class="card" v-else>
+          </div>
+
+          <div id="no-items" class="card" v-else>
             No Items
+          </div>
         </div>
 
         <aui-modal
@@ -281,15 +284,18 @@
     }
 </script>
 <style lang="sass">
-@import "../../../../client/sass/dynamicsuite"
-@import "../sass/colors"
+@import "../../../../../client/sass/dynamicsuite"
+@import "../../sass/colors"
 
 #inventory
   max-width: 1150px
+  width: 100%
+  height: 100%
+
   &>.header
     display: flex
     justify-content: space-between
-    margin-bottom: 2rem
+    margin-bottom: 1rem
 
     span
       display: flex
@@ -299,32 +305,40 @@
         margin-left: 1rem
 
 
-  #items
+  .ui
     display: grid
+    grid-template-columns: 1fr 1fr
     grid-gap: 1rem
 
-  #no-items
-    display: flex
-    justify-content: center
+    #items
+      display: grid
+      grid-template-columns: 1fr 1fr
+      grid-gap: 1rem
+      justify-content: center
+      align-self: flex-start
+
+    #no-items
+      display: flex
+      justify-content: center
+
 
   #edit-item-modal, #add-item-modal
+
+    .body>*
+      margin-bottom: 1rem
 
     .main-inputs
       display: grid
       grid-template-columns: 2fr 1fr
       grid-gap: 1rem
 
-    .wysiwyg-container
-      margin-bottom: 1rem
-
     .control
       display: flex
       align-items: center
 
-      .negative-actions
-        margin-right: auto
-
       .positive-actions
+        margin-left: auto
+
         .action-alert
           margin-right: 1rem
 

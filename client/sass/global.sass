@@ -1,11 +1,48 @@
 @import colors
 
+*
+  box-sizing: border-box
+
+
 h1, h2, h3, h4, h5
   color: $text-header
   margin: 0
 
 .card
   padding: 1rem
-  border-radius: .5rem
   background: $background-card
   box-shadow: 10px 10px 19px -13px rgba(0,0,0,0.75)
+
+.container
+  background: darken($background-highlight, 15%)
+  border-radius: .5rem
+  padding: .25rem
+
+.container-scroll
+  overflow-y: auto
+  background: darken($background-highlight, 15%)
+  border-radius: .5rem
+  padding: .25rem
+
+  &::-webkit-scrollbar
+    width: .5rem
+    border-radius: 50%
+
+  &::-webkit-scrollbar-track
+    background: none
+
+  &::-webkit-scrollbar-thumb
+    background: $background-highlight
+    border-radius: 4px
+
+  &>*
+    cursor: pointer
+    padding: .25rem
+    border-radius: 4px
+    margin: .25rem
+
+    &:hover
+      background: $background-highlight
+
+    &.active
+      background: $background-highlight

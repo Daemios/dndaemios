@@ -1,41 +1,42 @@
 @import colors
 
-#ds-body
+#dynamicsuite
   background-color: $primary
 
-#ds-view
-  background-image: url("../img/background.png")
+#ds-content
+  background-image: url("../../public/img/background.png")
   background-position: center /* Center the image */
   background-repeat: no-repeat /* Do not repeat the image */
   background-size: cover /* Resize the background image to cover the entire container */
   color: $text-theme
+  align-items: center
 
-#ds-view-header
-  background: $primary
+.ds-overlay
+  background: lighten($background-card, 10%)
 
   #ds-view-header-text
     color: #fff
 
-#ds-nav-container
-  background: $background-card
+  .links
+    background: $background-card
 
-  #ds-nav-header-text
-    background: $primary
-
-    &:hover
-      background: lighten($primary, 10%)
-
-  .ds-nav-superlink-container:hover .ds-nav-superlink
-    background: lighten($primary, 20%)
-
-  .ds-nav-superlink
-    background: lighten($primary, 5%)
-
-    &.ds-nav-active
-      background: lighten($primary, 15%)
+    #ds-nav-header-text
+      background: $primary
 
       &:hover
-        background: lighten($primary, 25%)
+        background: lighten($primary, 10%)
+
+    .ds-nav-superlink-container:hover .ds-nav-superlink
+      background: lighten($primary, 20%)
+
+    .ds-nav-superlink
+      background: lighten($primary, 5%)
+
+      &.ds-nav-active
+        background: lighten($primary, 15%)
+
+        &:hover
+          background: lighten($primary, 25%)
 
 
   #ds-nav-footer

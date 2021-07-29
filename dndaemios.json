@@ -10,6 +10,12 @@
   "js": [
     "js/dndaemios.min.js"
   ],
+  "overlay_actions": [
+    {
+      "component": "dnd-overlay-soundtrack",
+      "public": true
+    }
+  ],
   "autoload": ["lib"],
   "views": {
     "/welcome": {
@@ -63,19 +69,29 @@
       "post": ["item_id"]
     },
 
-
     "races.get": {
       "entry": "apis/character/races.get.php",
       "public": true
     },
-
-
     "archetypes.range.get": {
       "entry": "apis/character/archetypes.range.get.php",
       "public": true
     },
     "archetypes.role.get": {
       "entry": "apis/character/archetypes.role.get.php",
+      "public": true
+    },
+
+    "ability.ranges.get": {
+      "entry": "apis/ability/ability.ranges.get.php",
+      "public": true
+    },
+    "ability.shapes.get": {
+      "entry": "apis/ability/ability.shapes.get.php",
+      "public": true
+    },
+    "ability.types.get": {
+      "entry": "apis/ability/ability.types.get.php",
       "public": true
     }
 

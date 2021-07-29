@@ -1,14 +1,17 @@
 <template>
-    <div class="item card">
-        <span class="icon">
-            <i class="fas" :class="item.type.class"></i>
-        </span>
-        <span class="name">{{item.name}}</span>
-        <span class="quantity">{{item.quantity}}</span>
-        <span class="edit">
-            <i class="fas fa-edit" @click="$emit('edit')"></i>
-        </span>
-    </div>
+  <div class="item" @click="$emit('edit')">
+    <span class="info card">
+      <span class="name">{{item.name}}</span>
+      <span class="quantity">
+        <span>x</span>
+        <span>{{item.quantity}}</span>
+      </span>
+    </span>
+
+    <span class="icon">
+        <i class="fas" :class="item.type.class"></i>
+    </span>
+  </div>
 </template>
 <script>
     export default {
@@ -21,10 +24,19 @@
     }
 </script>
 <style lang="sass">
+@import "../sass/colors"
+
 .item
-  display: grid
-  grid-template-columns: 50px 1fr 1fr 1fr
-  grid-gap: 0 1rem
+  box-sizing: border-box
+  display: flex
+  flex-direction: row-reverse
+  width: 278px
+
+  &:hover
+    cursor: pointer
+
+    .card
+      background: lighten($background-card, 10%)
 
   &>*
     display: flex
@@ -32,13 +44,35 @@
 
   .icon
     font-size: 1.5rem
+    top: 0
+    bottom: 0
 
-  .edit
-    display: flex
-    align-items: center
-    justify-content: flex-end
     i
-      cursor: pointer
-      padding: 1rem
-      margin: -1rem
+      border-radius: 50%
+      background: white
+      height: 50px
+      width: 50px
+      color: black
+      display: flex
+      justify-content: center
+      align-items: center
+
+
+  .info
+    padding-left: 2rem
+    margin-left: -1rem
+    width: 100%
+
+    .name
+      white-space: nowrap
+      overflow: hidden
+
+    .quantity
+      margin-left: auto
+
+      span:last-of-type
+        font-weight: bold
+        color: white
+
+
 </style>

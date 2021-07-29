@@ -1,8 +1,8 @@
 <template>
-    <div id="arena" v-if="map !== null">
-        <div class="row" v-for="(row, y) in map">
-            <arena-cell
-                    v-for="(cell, x) in row"
+    <div class="arena" v-if="map !== null">
+        <div class="column" v-for="(column, x) in map">
+            <dnd-arena-cell
+                    v-for="(cell, y) in column"
                     @click="$emit('click', x, y)"
                     @cell-mouseover="$emit('cell-mouseover', x, y)"
                     @entity-mouseover="$emit('entity-mouseover', x, y, $event)"
@@ -12,7 +12,7 @@
                     :active="active"
                     :x="x"
                     :y="y"
-            ></arena-cell>
+            ></dnd-arena-cell>
         </div>
     </div>
 </template>
@@ -35,5 +35,9 @@
     }
 </script>
 <style lang="sass">
-
+.arena
+  display: flex
+  .column
+    display: flex
+    flex-direction: column
 </style>
