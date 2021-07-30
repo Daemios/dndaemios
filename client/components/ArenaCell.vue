@@ -13,7 +13,7 @@
                     v-for="entity in entities[x][y]"
                     :entity="entity"
                     :active="isActive"
-                    @entity-mouseover="$emit('entity-mouseover', entity)"
+                    @entity-mouseover="$emit('entity-mouseover', entity.mp.current)"
                     @entity-mouseout="$emit('entity-mouseout')"
             ></dnd-entity>
         </div>

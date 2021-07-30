@@ -164,13 +164,31 @@ export default {
       }
 
     },
-    highlightShape(x, y, entity, shape = 'diamond') {
-      if (type === 'diamond') {
+    highlightShape(x, y, radius, shape = 'diamond', key = 'valid_destination') {
 
-      } else if (type === 'square') {
+      x = parseInt(x)
+      y = parseInt(y)
 
-      } else if (type === 'cross') {
-
+      if (shape === 'diamond') {
+        this.iterateCells((iter_x, iter_y) => {
+          let dist_x = Math.abs(Number(x) - Number(iter_x));
+          let dist_y = Math.abs(Number(y) - Number(iter_y));
+          if (dist_x + dist_y <= radius) {
+            this.arena.map[iter_x][iter_y][key] = true;
+          }
+        })
+      }
+      else if (shape === 'square') {
+        this.iterateCells((iter_x, iter_y) => {
+          this.arena.map[iter_x][iter_y][key] = true;
+        }, x - radius, y - radius, radius)
+      }
+      else if (shape === 'cross') {
+        this.iterateCells((iter_x, iter_y) => {
+          if (parseInt(iter_x) === parseInt(x) || parseInt(iter_y) === parseInt(y)) {
+            this.arena.map[iter_x][iter_y][key] = true;
+          }
+        }, x - radius, y - radius, radius)
       }
     },
     clearHighlights() {
@@ -178,11 +196,17 @@ export default {
         this.arena.map[x][y].valid_destination = null;
       })
     },
-    iterateCells(callback) {
+    iterateCells(callback, start_x = 0, start_y = 0, limit = null) {
+      if (limit === null) {
+        limit = this.generation.cell_count;
+      } else {
+        limit = limit * 2 + 1;
+      }
+
       // Row
-      for (let x = 0; x < this.generation.cell_count; x++) {
+      for (let x = start_x; x < start_x + limit; x++) {
         // Cells
-        for (let y = 0; y < this.generation.cell_count; y++) {
+        for (let y = start_y; y < start_y + limit; y++) {
           callback(x, y);
         }
       }
