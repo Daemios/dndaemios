@@ -7,7 +7,7 @@ try {
 
     $ranges = (new Query())
         ->select()
-        ->from('dnd_ability_ranges')
+        ->from('ability_ranges')
         ->execute();
 
     return new Response('OK', 'Ability ranges retrieved', $ranges);

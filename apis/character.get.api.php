@@ -7,7 +7,7 @@ try {
 
     $items = (new Query())
         ->select()
-        ->from('dnd_characters')
+        ->from('characters')
         ->where('player_id', '=', $_POST['player_id'])
         ->execute();
 

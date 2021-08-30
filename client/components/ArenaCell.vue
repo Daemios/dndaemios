@@ -4,11 +4,12 @@
             :class="cell.terrain"
             oncontextmenu="return false"
             @click="$emit('click')"
-            @mouseover="$emit('cell-mouseover')"
+            @mouseover.self="$emit('cell-mouseover')"
     >
         <div class="overlay destination-overlay" v-if="cell.valid_destination && cell.valid_destination !== null && cell.passable"></div>
         <div class="overlay impassable-overlay" v-if="cell.valid_destination && cell.valid_destination !== null && !cell.passable"></div>
-        <div class="entities" v-if="entities.length">
+        <div class="entities" v-if="entities.length"
+             @mouseover.self="$emit('cell-mouseover')">
             <dnd-entity
                     v-for="entity in entities[x][y]"
                     :entity="entity"

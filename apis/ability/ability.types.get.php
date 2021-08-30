@@ -7,7 +7,7 @@ try {
 
     $types = (new Query())
         ->select()
-        ->from('dnd_ability_types')
+        ->from('ability_types')
         ->execute();
 
     return new Response('OK', 'Ability types retrieved', $types);

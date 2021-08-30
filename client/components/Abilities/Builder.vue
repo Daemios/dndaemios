@@ -63,12 +63,37 @@
         Points: {{skill_points_available}}
         <i class="fa fa-question" @click="togglePointsInfo()"></i>
       </h2>
-      <div class="points-grid container">
-        <aui-input
-            type="number"
+      <div class="points-grid">
+        <dnd-interface-block-counter
             title="Power"
-            v-model="points.power"
-        ></aui-input>
+            :limit="skill_points_available"
+            :start="points.power.current"
+            v-model="points.power.pending"
+        ></dnd-interface-block-counter>
+        <dnd-interface-block-counter
+            title="Cost"
+            :limit="skill_points_available"
+            :start="points.ap.current"
+            v-model="points.ap.pending"
+        ></dnd-interface-block-counter>
+        <dnd-interface-block-counter
+            title="Cooldown"
+            :limit="skill_points_available"
+            :start="points.cooldown.current"
+            v-model="points.cooldown.pending"
+        ></dnd-interface-block-counter>
+        <dnd-interface-block-counter
+            title="Area"
+            :limit="skill_points_available"
+            :start="points.area.current"
+            v-model="points.area.pending"
+        ></dnd-interface-block-counter>
+        <dnd-interface-block-counter
+            title="Range"
+            :limit="skill_points_available"
+            :start="points.range.current"
+            v-model="points.range.pending"
+        ></dnd-interface-block-counter>
       </div>
     </div>
     <div class="details">
@@ -96,7 +121,7 @@
       </p>
       <p>
         For clarity, self- and touch-range abilities cannot have additional range, but
-        any of the other options may be modified by gear and your archetype.
+        any of the other options may be modified by gear, the Ranged archetype, or other sources.
       </p>
     </aui-modal>
     <aui-modal
@@ -121,7 +146,7 @@
       <p>
         Please note, however, that (by default) all shapes target ALL entities inside of them with
         their effects. You may choose to override this behavior via spending additional ability points,
-        or you may simple choose to find clever ways of applying your abilities during combat.
+        or you may simple choose to find clever ways of positioning your abilities during combat.
       </p>
     </aui-modal>
     <aui-modal
@@ -153,7 +178,7 @@
       </p>
       <p>
         There are five point dumps, but the most important three are <strong>Power</strong>,
-        <strong>AP</strong>, and <strong>Cooldown</strong>.
+        <strong>Cost</strong>, and <strong>Cooldown</strong>.
       </p>
       <p>
         <strong>Power</strong> increases the abilities effect. Power is the truly unlimited stat in the sense that it
@@ -161,8 +186,8 @@
         deal. All of it is based off the power of your ability.
       </p>
       <p>
-        <strong>AP</strong> reduces the AP cost of your ability. You can calculate the AP cost of any ability like so:
-        <strong><em>(power_points + cooldown_points) - (ap_points * 2)</em></strong> and the maximum this value can be is
+        <strong>Cost</strong> reduces the AP cost of your ability. You can calculate the AP cost of any ability like so:
+        <strong><em>(power_points + cooldown_points) - (cost_points * 2)</em></strong> and the maximum this value can be is
         6 AP.
       </p>
       <p>
@@ -175,7 +200,7 @@
         ability. Simple stuff!
       </p>
       <p>
-        For example, you may choose to have a low power, no-cooldown ability you can spam, and augment it with
+        For example, you may choose to have a low power, no-cooldown ability you can spam, and supplement it with
         an long-cooldown but high power buff or debuff. The possibilities are quite vast, and I'm sure you have
         ideas of your own!
       </p>
@@ -207,11 +232,26 @@ export default {
       },
       points: {
         available: 5,
-        power: 0,
-        ap: 0,
-        cooldown: 0,
-        range: 0,
-        area: 0
+        power: {
+          current: 0,
+          pending: 0
+        },
+        ap: {
+          current: 0,
+          pending: 0
+        },
+        cooldown: {
+          current: 0,
+          pending: 0
+        },
+        range: {
+          current: 0,
+          pending: 0
+        },
+        area: {
+          current: 0,
+          pending: 0
+        }
       },
       modals: {
         range: false,
@@ -225,9 +265,6 @@ export default {
     }
   },
   methods: {
-    specificMax(current) {
-      return Number(this.skill_points_available) + Number(current);
-    },
 
     // Modal toggles
     toggleRangeInfo() {
@@ -266,11 +303,11 @@ export default {
   computed: {
     skill_points_available() {
       return this.points.available -
-          (Number(this.points.power) +
-          Number(this.points.ap) +
-          Number(this.points.cooldown) +
-          Number(this.points.range) +
-          Number(this.points.area));
+          (Number(this.points.power.pending) +
+          Number(this.points.ap.pending) +
+          Number(this.points.cooldown.pending) +
+          Number(this.points.range.pending) +
+          Number(this.points.area.pending));
     }
   },
   mounted() {
@@ -322,8 +359,9 @@ export default {
     flex-direction: column
 
     .points-grid
-      display: grid
-      grid-template-columns: repeat(5, 1fr)
+      display: flex
+      justify-content: center
+      gap: 1rem
 
   .details
     background: darken($background-highlight, 15%)

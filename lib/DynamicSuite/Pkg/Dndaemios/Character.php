@@ -40,7 +40,7 @@ class Character extends Storable implements IStorable
                 'archetype_distance' => $this->archetype_distance,
                 'archetype_role' => $this->archetype_role,
             ])
-            ->into('dnd_players_characters')
+            ->into('players_characters')
             ->execute();
         return $this;
     }
@@ -49,7 +49,7 @@ class Character extends Storable implements IStorable
     {
         $item = (new Query())
             ->select()
-            ->from('dnd_players_characters')
+            ->from('players_characters')
             ->where('character_id', '=', $id)
             ->execute(true);
         return $item ? new Item($item) : false;
@@ -59,7 +59,7 @@ class Character extends Storable implements IStorable
     {
         $this->validate(self::COLUMN_LIMITS);
         (new Query())
-            ->update('dnd_players_characters')
+            ->update('players_characters')
             ->set([
                 'character_id' => $this->character_id,
                 'player_id' => $this->player_id,
@@ -77,7 +77,7 @@ class Character extends Storable implements IStorable
     {
         (new Query())
             ->delete()
-            ->from('dnd_players_characters')
+            ->from('players_characters')
             ->where('character_id', '=', $this->character_id)
             ->execute();
         return $this;

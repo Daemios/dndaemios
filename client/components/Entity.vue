@@ -2,17 +2,23 @@
     <div
             class="entity"
             :class="classes"
-            @mouseover="$emit('entity-mouseover')"
-            @mouseout="$emit('entity-mouseout')"
+            @mouseover.self="$emit('entity-mouseover')"
+            @mouseout.self="$emit('entity-mouseout')"
     >
         <div class="nameplate">
             {{entity.name}}
         </div>
         <div class="stats">
-            <div class="ap">{{entity.ap.current}}</div>
-            <div class="mp">{{entity.mp.current}}</div>
+            <div class="ap"
+                 @mouseover.self="$emit('entity-mouseover')"
+                 @mouseout.self="$emit('entity-mouseout')"
+            >{{entity.ap.current}}</div>
+            <div class="mp"
+                 @mouseover.self="$emit('entity-mouseover')"
+                 @mouseout.self="$emit('entity-mouseout')"
+            >{{entity.mp.current}}</div>
         </div>
-        <div class="hp">{{entity.life.current}}|{{entity.life.max}}</div>
+        <div class="hp" v-if="false">{{entity.life.current}}|{{entity.life.max}}</div>
     </div>
 </template>
 <script>

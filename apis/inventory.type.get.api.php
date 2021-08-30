@@ -7,7 +7,7 @@ try {
 
     $types = (new Query())
         ->select()
-        ->from('dnd_inventory_types')
+        ->from('inventory_types')
         ->execute();
 
     return new Response('OK', 'Items retrieved', $types);

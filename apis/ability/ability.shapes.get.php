@@ -7,7 +7,7 @@ try {
 
     $shapes = (new Query())
         ->select()
-        ->from('dnd_ability_shapes')
+        ->from('ability_shapes')
         ->execute();
 
     return new Response('OK', 'Ability shapes retrieved', $shapes);

@@ -1,8 +1,20 @@
 @import colors
+@import "../../../../client/sass/_dynamicsuite.sass"
 
+// DS Overrides
+#dynamicsuite #ds-content
+  padding: 0
+
+// Vue transition classes
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
+
+// Global rules
 *
   box-sizing: border-box
-
 
 h1, h2, h3, h4, h5
   color: $text-header
@@ -46,3 +58,45 @@ h1, h2, h3, h4, h5
 
     &.active
       background: $background-highlight
+
+
+// Generic color helpers
+.color-positive
+  color: $color-success
+.color-negative
+  color: $color-failure
+
+// Elemental Colors
+.color-fire
+  color: $background-fire
+  font-weight: bold
+.color-ice
+  color: $background-ice
+  font-weight: bold
+.color-water
+  color: $background-water
+  font-weight: bold
+.color-light
+  color: $background-light
+  font-weight: bold
+.color-dark
+  color: $background-dark
+  font-weight: bold
+.color-nature
+  color: $background-nature
+  font-weight: bold
+.color-explosive
+  color: $background-explosive
+  font-weight: bold
+.color-poison
+  color: $background-poison
+  font-weight: bold
+.color-earth
+  color: $background-earth
+  font-weight: bold
+.color-energy
+  color: $background-energy
+  font-weight: bold
+.color-air
+  color: $background-air
+  font-weight: bold

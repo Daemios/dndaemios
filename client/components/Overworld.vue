@@ -94,7 +94,7 @@ export default {
           max: 10
         },
         mp: {
-          current: 2,
+          current: 9,
           max: 4
         },
         ap: {
@@ -132,7 +132,11 @@ export default {
 
     // --------- Map Tools ---------
     pathToCell(x, y) {
-      const entity = this.arena.entities[this.arena.turn_active.x][this.arena.turn_active.y][0];
+      this.clearHighlights();
+
+      let active_x = this.arena.turn_active.x;
+      let active_y = this.arena.turn_active.y;
+      const entity = this.arena.entities[active_x][active_y][0];
 
       // Check to see if there's any planned movement in the buffer
       if (this.arena.planned_movement.length) {
@@ -157,14 +161,60 @@ export default {
       // If there isn't planned movement check to see if this cell is within movement
       // range of the active turn entity's MP range
       if (entity.mp.current >= this.checkDistance(x, y, this.arena.turn_active.x, this.arena.turn_active.y)) {
-        // Generate a path and insert it into the buffer
-        console.log(parseInt(x), parseInt(y))
 
-        // Toggle
+        // Find how many cells
+        let path_count = Math.abs(x - active_x) + Math.abs(y - active_y);
+
+        // Set path array and first element
+        let path = [[active_x, active_y]];
+
+        let x_direction = x >= active_x ? 1 : -1; // Will multiply by this to change direction on x axis
+        let y_direction = y >= active_y ? 1 : -1; // Will multiply by this to change direction on y axis
+        let x_main = Math.abs(x - active_x) >= Math.abs(y - active_y);// If we should main the X or Y axis
+
+        // Generate path and store in the path buffer (start at 1 because we already set path[0]
+        for (let i = 1; i <= path_count; i++) {
+
+          // If we should main the X axis
+          if (x_main) {
+            // Insert the next position based on last position (do we need to add more to x or not?)
+            if (path[i-1][0] !== x) {
+              const x = path[i-1][0] + (1 * x_direction);
+              const y = path[i-1][1];
+
+              this.arena.map[x][y].valid_destination = true;
+              path[i] = [x, y]
+            } else {
+              const x = path[i-1][0];
+              const y = path[i-1][1] + (1 * y_direction);
+
+              this.arena.map[x][y].valid_destination = true;
+              path[i] = [x, y]
+            }
+          }
+          // If we should main the Y axis
+          else {
+            // Insert the next position based on last position (do we need to add more to y or not?)
+            if (path[i-1][1] !== parseInt(y)) {
+              const x = path[i-1][0];
+              const y = path[i-1][1] + (1 * y_direction);
+
+              this.arena.map[x][y].valid_destination = true;
+              path[i] = [x, y]
+            } else {
+              const x = path[i-1][0] + (1 * x_direction);
+              const y = path[i-1][1];
+
+              this.arena.map[x][y].valid_destination = true;
+              path[i] = [x, y]
+            }
+          }
+        }
       }
 
     },
     highlightShape(x, y, radius, shape = 'diamond', key = 'valid_destination') {
+      this.clearHighlights();
 
       x = parseInt(x)
       y = parseInt(y)
@@ -202,6 +252,8 @@ export default {
       } else {
         limit = limit * 2 + 1;
       }
+
+
 
       // Row
       for (let x = start_x; x < start_x + limit; x++) {

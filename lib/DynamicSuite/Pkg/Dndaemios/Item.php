@@ -40,7 +40,7 @@ class Item extends Storable implements IStorable
                 'description' => $this->description,
                 'quantity' => $this->quantity
             ])
-            ->into('dnd_inventory')
+            ->into('inventory')
             ->execute();
         return $this;
     }
@@ -49,7 +49,7 @@ class Item extends Storable implements IStorable
     {
         $item = (new Query())
             ->select()
-            ->from('dnd_inventory')
+            ->from('inventory')
             ->where('item_id', '=', $id)
             ->execute(true);
         return $item ? new Item($item) : false;
@@ -60,7 +60,7 @@ class Item extends Storable implements IStorable
         $this->validate(self::COLUMN_LIMITS);
 
         (new Query())
-            ->update('dnd_inventory')
+            ->update('inventory')
             ->set([
                 'name' => $this->name,
                 'type_id' => $this->type_id,
@@ -77,7 +77,7 @@ class Item extends Storable implements IStorable
     {
         (new Query())
             ->delete()
-            ->from('dnd_inventory')
+            ->from('inventory')
             ->where('item_id', '=', $this->item_id)
             ->execute();
         return $this;

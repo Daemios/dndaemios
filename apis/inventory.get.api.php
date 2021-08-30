@@ -7,13 +7,13 @@ try {
 
     $items = (new Query())
         ->select()
-        ->from('dnd_inventory')
+        ->from('inventory')
         ->where('character_id', '=', $_POST['character_id'])
         ->execute();
 
     $types = (new Query())
         ->select()
-        ->from('dnd_inventory_types')
+        ->from('inventory_types')
         ->execute();
 
     foreach ($items as $key => $item) {

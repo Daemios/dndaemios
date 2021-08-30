@@ -73,6 +73,10 @@
       "entry": "apis/character/races.get.php",
       "public": true
     },
+    "affinities.get": {
+      "entry": "apis/character/affinities.get.php",
+      "public": true
+    },
     "archetypes.range.get": {
       "entry": "apis/character/archetypes.range.get.php",
       "public": true

@@ -81,6 +81,7 @@ body
   display: flex
   justify-content: center
   overflow: hidden
+  flex: 1
 
   #waiting
     flex: 1
